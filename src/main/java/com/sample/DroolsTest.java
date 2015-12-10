@@ -1,6 +1,12 @@
 package com.sample;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
@@ -23,11 +29,35 @@ public class DroolsTest {
     	
     	//INTERFACE
     	
-    	JFrame frame = new JFrame("Vacations");
+    	final JFrame frame = new JFrame("Vacations");
     	frame.setSize(500,500);
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setVisible(true);
     	
+    	final JPanel panel = new JPanel();
+    	panel.setBackground(Color.decode("#96ceb4"));
+    	panel.setLayout(null);
+    	frame.add(panel);
+    	
+    	JButton start = new JButton("START");
+    	start.addActionListener(new ActionListener()
+    	{
+    		  public void actionPerformed(ActionEvent e)
+    		  {
+    			  JPanel panel_pytania = new JPanel();
+    			  panel_pytania.setBackground(Color.decode("#ff6f69"));
+    			  panel_pytania.setVisible(true);
+    			  frame.remove(panel);
+    			  frame.add(panel_pytania);
+    			  frame.revalidate();
+    			  frame.repaint();
+    		  }
+    	});
+    	start.setBounds(160,300,150,50);
+    	start.setVisible(true);
+    	panel.add(start);
+    	
+    	//REGU£Y
         try {
             // load up the knowledge base
             KnowledgeBase kbase = readKnowledgeBase();
