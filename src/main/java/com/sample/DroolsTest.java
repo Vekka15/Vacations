@@ -1,6 +1,7 @@
 package com.sample;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import org.drools.KnowledgeBase;
@@ -27,7 +29,6 @@ import org.drools.io.ResourceFactory;
 import org.drools.logger.KnowledgeRuntimeLogger;
 import org.drools.logger.KnowledgeRuntimeLoggerFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
-
 
 import javax.swing.BorderFactory;
 
@@ -48,8 +49,13 @@ public class DroolsTest {
     	
     	//napis
     	
-    	JLabel napis = new JLabel("ZNAJDZ SWOJE IDEALNE MIEJSCE");
-    	napis.setBounds(100,100,100,100);
+    	JLabel napis = new JLabel("<html><center> VACATION</center><center> FINDER <center></html>");
+    	Font myFont = new Font("Tahoma", Font.BOLD, 40);
+    	Font buttonFont = new Font("Tahoma", Font.BOLD, 25);
+    	napis.setFont(myFont);
+    	napis.setHorizontalAlignment(SwingConstants.CENTER);
+    	napis.setBounds(175,325,250,100);
+    	napis.setForeground(Color.decode("#555555"));
     	napis.setVisible(true);
     	
     	//obrazek logo
@@ -81,8 +87,10 @@ public class DroolsTest {
     			  frame.repaint();
     		  }
     	});
-    	start.setBounds(220,500,150,50);
-    	start.setBorder(BorderFactory.createLineBorder(Color.white));
+    	start.setBounds(210,500,180,70);
+    	start.setBorder(BorderFactory.createLineBorder(Color.decode("#555555"),4));
+    	start.setFont(buttonFont);
+    	start.setForeground(Color.decode("#555555"));
     	start.setContentAreaFilled(false);
     	start.setVisible(true);
     	panel.add(start);
