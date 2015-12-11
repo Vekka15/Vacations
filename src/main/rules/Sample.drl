@@ -1,10 +1,11 @@
-package com.sample
- 
- 
+package com.sample;
+
 rule "Test"
     when
        	Odpowiedz(text=="Europa");
+       	p:Pytanie();
     then
-        System.out.println( "Dzia³a" );
+    	p.ask("Pytanie",new String[]{"Text","text1"}); //tresc pytania, tresci odpowiedzi
+        System.out.println("dzia³a");
 end
 

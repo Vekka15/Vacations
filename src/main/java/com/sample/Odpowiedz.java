@@ -11,6 +11,7 @@ public class Odpowiedz {
 		text=inf;
 		znacznik = new JRadioButton(this.text);
 	}
+	
 	void answer(){
 		DroolsTest.ksession.insert(this);
 	}

@@ -40,17 +40,22 @@ import javax.swing.BorderFactory;
  * This is a sample class to launch a rule.
  */
 public class DroolsTest {
+	public @interface panel_pytania {
+
+	}
+
+
 	public static StatefulKnowledgeSession ksession;
 	public static KnowledgeRuntimeLogger logger;
+	public static KnowledgeBase kbase;
+	public static Pytanie pytanie ;
     public static final void main(String[] args) throws IOException {
-    	
-    	
     	//REGU£Y
         try {
             // load up the knowledge base
-            KnowledgeBase kbase = readKnowledgeBase();
+            kbase = readKnowledgeBase();
             ksession = kbase.newStatefulKnowledgeSession();
-            KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
+            logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
             // go !
            // Odpowiedz odp = new Odpowiedz("Europa");
             //ksession.insert(message);
@@ -59,15 +64,7 @@ public class DroolsTest {
             t.printStackTrace();
         }
         
-      //PYTANIA
-    	final ButtonGroup radio_buttons = new ButtonGroup();
-    	final Pytanie pytanie1 = new Pytanie("Wakacje gdzie bardziej ciê interesuj¹?");
-    	Odpowiedz odp1 = new Odpowiedz("Polska");   	
-    	Odpowiedz odp2 = new Odpowiedz("Europa");
-    	Odpowiedz odp3 = new Odpowiedz("Œwiat");
-    	pytanie1.odpowiedzi.add(odp1); //dodajemy do listy ¿eby potem po niej iterowac i nie trzeba wiedziec ile potrzeba radiobuttonow
-    	pytanie1.odpowiedzi.add(odp2);
-    	pytanie1.odpowiedzi.add(odp3);
+
     	 	
     	
     	//INTERFACE
@@ -103,7 +100,19 @@ public class DroolsTest {
     	panel.setLayout(null);
     	frame.add(panel);
     	
+    	//ustawienia panelu startowego
     	JButton start = new JButton("START");
+    	start.setBounds(210,500,180,70);
+    	start.setBorder(BorderFactory.createLineBorder(Color.decode("#555555"),4));
+    	start.setFont(buttonFont);
+    	start.setForeground(Color.decode("#555555"));
+    	start.setContentAreaFilled(false);
+    	start.setVisible(true);
+    	panel.add(start);
+    	panel.add(logoLabel);
+    	panel.add(napis);
+    	
+    	//ustawienia poczatkowe panelu z pytaniami
     	start.addActionListener(new ActionListener()
     	{
     		  public void actionPerformed(ActionEvent e)
@@ -114,55 +123,56 @@ public class DroolsTest {
     			  frame.repaint();
     			  panel_pytania.setBackground(Color.decode("#ff6f69"));
     			  panel_pytania.setVisible(true);
-    			  JLabel pytanie_label = new JLabel(pytanie1.text);
+    		      //PYTANIA
+    		    	//final ButtonGroup radio_buttons = new ButtonGroup();
+    		    	pytanie = new Pytanie("Wakacje gdzie bardziej ciê interesuj¹?",panel_pytania);
+    		    	//Pytanie pyt = new Pytanie("bla");
+    		    	ksession.insert(pytanie);
+    		    	Odpowiedz odp1 = new Odpowiedz("Polska");   	
+    		    	Odpowiedz odp2 = new Odpowiedz("Europa");
+    		    	Odpowiedz odp3 = new Odpowiedz("Œwiat");
+    		    	pytanie.odpowiedzi.add(odp1); //dodajemy do listy ¿eby potem po niej iterowac i nie trzeba wiedziec ile potrzeba radiobuttonow
+    		    	pytanie.odpowiedzi.add(odp2);
+    		    	pytanie.odpowiedzi.add(odp3);
+    		     JLabel pytanie_label = new JLabel(pytanie.text);
     			  //RADIO BUTTONSY
     			  int wysokosc = 300;
     			  int szerokosc = 200;
-    			  for(int i=0;i<pytanie1.odpowiedzi.size();i++){
-    				  radio_buttons.add(pytanie1.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
-    				  pytanie1.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,50);
-    				  pytanie1.odpowiedzi.get(i).znacznik.setVisible(true);
-    				  panel_pytania.add(pytanie1.odpowiedzi.get(i).znacznik);
+    			  for(int i=0;i<pytanie.odpowiedzi.size();i++){
+    				  pytanie.radio_buttons.add(pytanie.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
+    				  pytanie.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,50);
+    				  pytanie.odpowiedzi.get(i).znacznik.setVisible(true);
+    				  panel_pytania.add(pytanie.odpowiedzi.get(i).znacznik);
     				  wysokosc = wysokosc+50;
     			  }
-    			  pytanie1.odpowiedzi.get(0).znacznik.setSelected(true);
-    			  pytanie1.akceptuj_button.setBounds(200,500,150,50);
-    			  pytanie1.akceptuj_button.setVisible(true);
-    			  pytanie1.akceptuj_button.addActionListener(new ActionListener()
+    			  pytanie.odpowiedzi.get(0).znacznik.setSelected(true);
+    			  pytanie.akceptuj_button.setBounds(200,500,150,50);
+    			  pytanie.akceptuj_button.setVisible(true);
+    			  pytanie.akceptuj_button.addActionListener(new ActionListener()
     				{
     					  public void actionPerformed(ActionEvent e)
     					  {
-    						  for(int i=0;i< pytanie1.odpowiedzi.size();i++){ 
-    							  if (pytanie1.odpowiedzi.get(i).znacznik.isSelected()==true){
-    								  System.out.println(pytanie1.odpowiedzi.get(i).text);
-    								  pytanie1.odpowiedzi.get(i).answer();
+    						  for(int i=0;i< pytanie.odpowiedzi.size();i++){ 
+    							  if (pytanie.odpowiedzi.get(i).znacznik.isSelected()==true){
+    								  System.out.println(pytanie.odpowiedzi.get(i).text);
+    								  //dodanie 
+    								 // Odpowiedz od = new Odpowiedz("Klops");
+    								 // od.answer();
+    								  pytanie.odpowiedzi.get(i).answer();
     								  ksession.fireAllRules();
+    								  logger.close();
     							  }
     						  }
     					  }
     				});
-    			  panel_pytania.add(pytanie1.akceptuj_button);
+    			  panel_pytania.add(pytanie.akceptuj_button);
     			  // TRESC PYTANIA
     			  pytanie_label.setBounds(200,150,250,100);
     			  pytanie_label.setVisible(true);
     			  panel_pytania.add(pytanie_label);
     		  }
     	});
-    	start.setBounds(210,500,180,70);
-    	start.setBorder(BorderFactory.createLineBorder(Color.decode("#555555"),4));
-    	start.setFont(buttonFont);
-    	start.setForeground(Color.decode("#555555"));
-    	start.setContentAreaFilled(false);
-    	start.setVisible(true);
-    	panel.add(start);
-    	panel.add(logoLabel);
-    	panel.add(napis);
-    	//zamykanie regu³ cos takiego ??
-    	try {
-            logger.close();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+
     	
     }
 
