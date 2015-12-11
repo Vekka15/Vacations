@@ -47,7 +47,7 @@ public class DroolsTest {
     	//PYTANIA
     	final ButtonGroup radio_buttons = new ButtonGroup();
     	final Pytanie pytanie1 = new Pytanie("Wakacje gdzie bardziej ciê interesuj¹?");
-    	Odpowiedz odp1 = new Odpowiedz("Polska");
+    	Odpowiedz odp1 = new Odpowiedz("Polska");   	
     	Odpowiedz odp2 = new Odpowiedz("Europa");
     	Odpowiedz odp3 = new Odpowiedz("Œwiat");
     	pytanie1.odpowiedzi.add(odp1); //dodajemy do listy ¿eby potem po niej iterowac i nie trzeba wiedziec ile potrzeba radiobuttonow
@@ -104,6 +104,8 @@ public class DroolsTest {
     			  int wysokosc = 300;
     			  int szerokosc = 200;
     			  for(int i=0;i<pytanie1.odpowiedzi.size();i++){
+    				  System.out.println(pytanie1.odpowiedzi.get(i).text);
+					  System.out.println(i);
     				  radio_buttons.add(pytanie1.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
     				  pytanie1.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,50);
     				  pytanie1.odpowiedzi.get(i).znacznik.setVisible(true);
@@ -113,6 +115,18 @@ public class DroolsTest {
     			  pytanie1.odpowiedzi.get(0).znacznik.setSelected(true);
     			  pytanie1.akceptuj_button.setBounds(200,500,150,50);
     			  pytanie1.akceptuj_button.setVisible(true);
+    			  pytanie1.akceptuj_button.addActionListener(new ActionListener()
+    				{
+    					  public void actionPerformed(ActionEvent e)
+    					  {
+    						  for(int i=0;i< pytanie1.odpowiedzi.size();i++){
+    							  
+    							  if (pytanie1.odpowiedzi.get(i).znacznik.isSelected()==true){
+    								  System.out.println(pytanie1.odpowiedzi.get(i).text);
+    							  }
+    						  }
+    					  }
+    				});
     			  panel_pytania.add(pytanie1.akceptuj_button);
     			  // TRESC PYTANIA
     			  pytanie_label.setBounds(200,150,250,100);
