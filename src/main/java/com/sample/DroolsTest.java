@@ -10,11 +10,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
@@ -41,6 +43,17 @@ public class DroolsTest {
 	public static StatefulKnowledgeSession ksession;
 
     public static final void main(String[] args) throws IOException {
+    	
+    	//PYTANIA
+    	final ButtonGroup radio_buttons = new ButtonGroup();
+    	final Pytanie pytanie1 = new Pytanie("Wakacje gdzie bardziej ciê interesuj¹?");
+    	Odpowiedz odp1 = new Odpowiedz("Polska");
+    	Odpowiedz odp2 = new Odpowiedz("Europa");
+    	Odpowiedz odp3 = new Odpowiedz("Œwiat");
+    	pytanie1.odpowiedzi.add(odp1); //dodajemy do listy ¿eby potem po niej iterowac i nie trzeba wiedziec ile potrzeba radiobuttonow
+    	pytanie1.odpowiedzi.add(odp2);
+    	pytanie1.odpowiedzi.add(odp3);
+    	 	
     	
     	//INTERFACE
     	
@@ -80,12 +93,31 @@ public class DroolsTest {
     	{
     		  public void actionPerformed(ActionEvent e)
     		  {
-    			  panel_pytania.setBackground(Color.decode("#ff6f69"));
-    			  panel_pytania.setVisible(true);
     			  frame.remove(panel);
     			  frame.add(panel_pytania);
     			  frame.revalidate();
     			  frame.repaint();
+    			  panel_pytania.setBackground(Color.decode("#ff6f69"));
+    			  panel_pytania.setVisible(true);
+    			  JLabel pytanie_label = new JLabel(pytanie1.text);
+    			  //RADIO BUTTONSY
+    			  int wysokosc = 300;
+    			  int szerokosc = 200;
+    			  for(int i=0;i<pytanie1.odpowiedzi.size();i++){
+    				  radio_buttons.add(pytanie1.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
+    				  pytanie1.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,50);
+    				  pytanie1.odpowiedzi.get(i).znacznik.setVisible(true);
+    				  panel_pytania.add(pytanie1.odpowiedzi.get(i).znacznik);
+    				  wysokosc = wysokosc+50;
+    			  }
+    			  pytanie1.odpowiedzi.get(0).znacznik.setSelected(true);
+    			  pytanie1.akceptuj_button.setBounds(200,500,150,50);
+    			  pytanie1.akceptuj_button.setVisible(true);
+    			  panel_pytania.add(pytanie1.akceptuj_button);
+    			  // TRESC PYTANIA
+    			  pytanie_label.setBounds(200,150,250,100);
+    			  pytanie_label.setVisible(true);
+    			  panel_pytania.add(pytanie_label);
     		  }
     	});
     	start.setBounds(210,500,180,70);
@@ -105,7 +137,7 @@ public class DroolsTest {
             ksession = kbase.newStatefulKnowledgeSession();
             KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
             // go !
-            Odpowiedz odp = new Odpowiedz();
+            Odpowiedz odp = new Odpowiedz("odp");
             //ksession.insert(message);
             odp.answer();
             ksession.fireAllRules();
