@@ -33,13 +33,15 @@ public class Pytanie {
 			this.text=inf;
 
 			odpowiedzi.clear();
-			for(int j=0;j<odp.length-1;j++){
+			for(int j=0;j<odp.length;j++){
 				odpowiedzi.add(new Odpowiedz(odp[j]));
 			}
 		  panel_pytania.removeAll();
 		  panel_pytania.setBackground(Color.decode("#ff6f69"));
 		  panel_pytania.setVisible(true);
-			System.out.println(this.text);
+		  panel_pytania.setLayout(null);
+		  panel_pytania.revalidate();
+		  panel_pytania.repaint();
 		  JLabel pytanie_label = new JLabel(this.text);
 		  //RADIO BUTTONSY
 		  int wysokosc = 300;

@@ -5,7 +5,7 @@ rule "Test"
        	Odpowiedz(text=="Europa");
        	p:Pytanie();
     then
-    	p.ask("Pytanie",new String[]{"Text","text1"}); //tresc pytania, tresci odpowiedzi
+    	p.ask("Pytanie",new String[]{"Text","Text1"}); //tresc pytania, tresci odpowiedzi
         System.out.println("dzia³a");
 end
 
