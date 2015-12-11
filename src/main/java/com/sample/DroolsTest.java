@@ -55,22 +55,16 @@ public class DroolsTest {
             kbase = readKnowledgeBase();
             ksession = kbase.newStatefulKnowledgeSession();
             logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
-            // go !
-           // Odpowiedz odp = new Odpowiedz("Europa");
-            //ksession.insert(message);
-           // odp.answer();
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        
-
-    	 	
+       	 	
     	
     	//INTERFACE
     	
     	final JFrame frame = new JFrame("Vacations"); //okno
     	final JPanel panel = new JPanel(); //panel powitalny
-    	final JPanel panel_pytania = new JPanel(); //panel z pytaniami
+    	//final JPanel panel_pytania = new JPanel(); //panel z pytaniami
     	
     	//napis
     	
@@ -116,55 +110,13 @@ public class DroolsTest {
     	{
     		  public void actionPerformed(ActionEvent e)
     		  {
-    			  frame.remove(panel);
-    			  frame.add(panel_pytania);
-    			  frame.revalidate();
-    			  frame.repaint();
-    			  panel_pytania.setBackground(Color.decode("#ff6f69"));
-    			  panel_pytania.setVisible(true);
-    		      //PYTANIE POCZ¥TKOWE
-    		    	pytanie = new Pytanie("Wakacje gdzie bardziej ciê interesuj¹?",panel_pytania);
-    		    	ksession.insert(pytanie);
-    		    	Odpowiedz odp1 = new Odpowiedz("Polska");   	
-    		    	Odpowiedz odp2 = new Odpowiedz("Europa");
-    		    	Odpowiedz odp3 = new Odpowiedz("Œwiat");
-    		    	pytanie.odpowiedzi.add(odp1); //dodajemy do listy ¿eby potem po niej iterowac i nie trzeba wiedziec ile potrzeba radiobuttonow
-    		    	pytanie.odpowiedzi.add(odp2);
-    		    	pytanie.odpowiedzi.add(odp3);
-    		     JLabel pytanie_label = new JLabel(pytanie.text);
-    			  //RADIO BUTTONSY
-    			  int wysokosc = 300;
-    			  int szerokosc = 200;
-    			  for(int i=0;i<pytanie.odpowiedzi.size();i++){
-    				  pytanie.radio_buttons.add(pytanie.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
-    				  pytanie.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,50);
-    				  pytanie.odpowiedzi.get(i).znacznik.setVisible(true);
-    				  panel_pytania.add(pytanie.odpowiedzi.get(i).znacznik);
-    				  wysokosc = wysokosc+50;
-    			  }
-    			  pytanie.odpowiedzi.get(0).znacznik.setSelected(true);
-    			  
-    			  //AKCEPTACJA ODPOWIEDZI 
-    			  pytanie.akceptuj_button.setBounds(200,500,150,50);
-    			  pytanie.akceptuj_button.setVisible(true);
-    			  pytanie.akceptuj_button.addActionListener(new ActionListener()
-    				{
-    					  public void actionPerformed(ActionEvent e)
-    					  {
-    						  for(int i=0;i< pytanie.odpowiedzi.size();i++){ 
-    							  if (pytanie.odpowiedzi.get(i).znacznik.isSelected()==true){
-    								  System.out.println(pytanie.odpowiedzi.get(i).text);
-    								  pytanie.odpowiedzi.get(i).answer(); //t¹ metod¹ siê dorzuca odpowiedz do bazy danych
-    								  ksession.fireAllRules();
-    							  }
-    						  }
-    					  }
-    				});
-    			  panel_pytania.add(pytanie.akceptuj_button);
-    			  // TRESC PYTANIA
-    			  pytanie_label.setBounds(200,150,250,100);
-    			  pytanie_label.setVisible(true);
-    			  panel_pytania.add(pytanie_label);
+    			  panel.removeAll();
+    			  panel.revalidate();
+    			  panel.repaint();
+    			//PYTANIE POCZ¥TKOWE
+  		    	pytanie = new Pytanie("Wakacje gdzie bardzie?",panel);
+  		    	ksession.insert(pytanie);
+  		    	pytanie.ask("Wakacje gdzie bardziej ciê interesuj¹?",new String[]{"Polska","Europa","Œwiat"});
     		  }
     	});
     	

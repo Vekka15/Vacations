@@ -5,7 +5,7 @@ rule "Test"
        	Odpowiedz(text=="Europa"); // wszystkie elementy to odpowiedzi, aby je rozró¿niaæ sprawdzamy atr text
        	p:Pytanie();
     then
-    	p.ask("Pytanie",new String[]{"Text","Text1"}); //tresc pytania, tresci odpowiedzi
+    	p.ask("Pytanie",new String[]{"Text","Text1"}); //tresc nowego pytania, tresci odpowiedzi
         System.out.println("dzia³a");
 end
 

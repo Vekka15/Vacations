@@ -3,16 +3,23 @@ package com.sample;
 
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 public class Pytanie {
@@ -26,6 +33,13 @@ public class Pytanie {
 	Pytanie(String inf,JPanel panel){
 		this.text = inf;
 		this.panel_pytania=panel;
+		Font buttonFont = new Font("Tahoma", Font.BOLD, 15);
+		akceptuj_button.setBackground(null);
+		akceptuj_button.setBorder(BorderFactory.createLineBorder(Color.decode("#555555"),4));
+		akceptuj_button.setFont(buttonFont);
+		akceptuj_button.setForeground(Color.decode("#555555"));
+		akceptuj_button.setContentAreaFilled(false);
+		akceptuj_button.setVisible(true);
 	}
 	
 	//przerysowanie wszystkich elementów na panelu wraz z wartoœciami nowego pytania
@@ -38,21 +52,38 @@ public class Pytanie {
 			}
 			// ODSWIEZENIE PANELU
 		  panel_pytania.removeAll();
-		  panel_pytania.setBackground(Color.decode("#ff6f69"));
 		  panel_pytania.setVisible(true);
 		  panel_pytania.setLayout(null);
 		  panel_pytania.revalidate();
 		  panel_pytania.repaint();
+		  try {
+				final BufferedImage logo = ImageIO.read(new File("logo.png"));
+  			  JLabel logoLabel = new JLabel(new ImageIcon(logo));
+  		    	logoLabel.setBounds(0,0,logo.getWidth(),logo.getHeight());
+  		    	logoLabel.setVisible(true);
+  		    	panel_pytania.add(logoLabel);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		  // TRESC PYTANIA (Label)
+		  Font font = new Font("Tahoma", Font.BOLD, 15);
 		  JLabel pytanie_label = new JLabel(this.text);
+		  pytanie_label.setBounds(150,300,300,100);
+		  pytanie_label.setHorizontalAlignment(SwingConstants.CENTER);
+		  pytanie_label.setForeground(Color.decode("#555555"));
+		  pytanie_label.setVisible(true);
+		  pytanie_label.setFont(font);
+		  panel_pytania.add(pytanie_label);
 		  //RADIO BUTTONSY
-		  int wysokosc = 300;
-		  int szerokosc = 200;
+		  int wysokosc = 400;
+		  int szerokosc = 240;
 		  for(int i=0;i<this.odpowiedzi.size();i++){
 			  radio_buttons.add(this.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
-			  this.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,50);
+			  this.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,25);
 			  this.odpowiedzi.get(i).znacznik.setVisible(true);
 			  panel_pytania.add(this.odpowiedzi.get(i).znacznik);
-			  wysokosc = wysokosc+50;
+			  wysokosc = wysokosc+25;
 		  }
 		  this.odpowiedzi.get(0).znacznik.setSelected(true);
 		  this.akceptuj_button.setBounds(200,500,150,50);
@@ -72,10 +103,6 @@ public class Pytanie {
 				  }
 			});
 		  panel_pytania.add(this.akceptuj_button);
-		  // TRESC PYTANIA
-		  pytanie_label.setBounds(200,150,250,100);
-		  pytanie_label.setVisible(true);
-		  panel_pytania.add(pytanie_label);
 		  panel_pytania.revalidate();
 		  panel_pytania.repaint();
 		}
