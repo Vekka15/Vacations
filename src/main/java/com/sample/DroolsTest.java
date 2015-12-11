@@ -40,16 +40,15 @@ import javax.swing.BorderFactory;
  * This is a sample class to launch a rule.
  */
 public class DroolsTest {
-	public @interface panel_pytania {
-
-	}
-
+	
 
 	public static StatefulKnowledgeSession ksession;
 	public static KnowledgeRuntimeLogger logger;
 	public static KnowledgeBase kbase;
 	public static Pytanie pytanie ;
     public static final void main(String[] args) throws IOException {
+    	
+    	
     	//REGU£Y
         try {
             // load up the knowledge base
@@ -85,7 +84,7 @@ public class DroolsTest {
     	napis.setVisible(true);
     	
     	//obrazek logo
-    	BufferedImage logoPicture = ImageIO.read(new File("/Users/Zuzanna/workspace/Vacations/src/resources/logo.png"));
+    	BufferedImage logoPicture = ImageIO.read(new File("logo.png"));
     	JLabel logoLabel = new JLabel(new ImageIcon(logoPicture));
     	logoLabel.setBounds(0,0,logoPicture.getWidth(),logoPicture.getHeight());
     	logoLabel.setVisible(true);
@@ -123,10 +122,8 @@ public class DroolsTest {
     			  frame.repaint();
     			  panel_pytania.setBackground(Color.decode("#ff6f69"));
     			  panel_pytania.setVisible(true);
-    		      //PYTANIA
-    		    	//final ButtonGroup radio_buttons = new ButtonGroup();
+    		      //PYTANIE POCZ¥TKOWE
     		    	pytanie = new Pytanie("Wakacje gdzie bardziej ciê interesuj¹?",panel_pytania);
-    		    	//Pytanie pyt = new Pytanie("bla");
     		    	ksession.insert(pytanie);
     		    	Odpowiedz odp1 = new Odpowiedz("Polska");   	
     		    	Odpowiedz odp2 = new Odpowiedz("Europa");
@@ -146,6 +143,8 @@ public class DroolsTest {
     				  wysokosc = wysokosc+50;
     			  }
     			  pytanie.odpowiedzi.get(0).znacznik.setSelected(true);
+    			  
+    			  //AKCEPTACJA ODPOWIEDZI 
     			  pytanie.akceptuj_button.setBounds(200,500,150,50);
     			  pytanie.akceptuj_button.setVisible(true);
     			  pytanie.akceptuj_button.addActionListener(new ActionListener()
@@ -155,12 +154,8 @@ public class DroolsTest {
     						  for(int i=0;i< pytanie.odpowiedzi.size();i++){ 
     							  if (pytanie.odpowiedzi.get(i).znacznik.isSelected()==true){
     								  System.out.println(pytanie.odpowiedzi.get(i).text);
-    								  //dodanie 
-    								 // Odpowiedz od = new Odpowiedz("Klops");
-    								 // od.answer();
-    								  pytanie.odpowiedzi.get(i).answer();
+    								  pytanie.odpowiedzi.get(i).answer(); //t¹ metod¹ siê dorzuca odpowiedz do bazy danych
     								  ksession.fireAllRules();
-    								  logger.close();
     							  }
     						  }
     					  }
@@ -172,6 +167,13 @@ public class DroolsTest {
     			  panel_pytania.add(pytanie_label);
     		  }
     	});
+    	
+    	//ZAMKNIECIE LOGERA NA WY£¥CZENIE PROGRAMU
+    	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+    	    public void run() {
+    	    	logger.close();
+    	    }
+    	}));
 
     	
     }

@@ -36,6 +36,7 @@ public class Pytanie {
 			for(int j=0;j<odp.length;j++){
 				odpowiedzi.add(new Odpowiedz(odp[j]));
 			}
+			// ODSWIEZENIE PANELU
 		  panel_pytania.removeAll();
 		  panel_pytania.setBackground(Color.decode("#ff6f69"));
 		  panel_pytania.setVisible(true);
@@ -64,9 +65,6 @@ public class Pytanie {
 					  for(int i=0;i< odpowiedzi.size();i++){ 
 						  if (odpowiedzi.get(i).znacznik.isSelected()==true){
 							  System.out.println(odpowiedzi.get(i).text);
-							  //dodanie 
-							 // Odpowiedz od = new Odpowiedz("Klops");
-							 // od.answer();
 							  odpowiedzi.get(i).answer();
 							  DroolsTest.ksession.fireAllRules();
 						  }
@@ -81,11 +79,7 @@ public class Pytanie {
 		  panel_pytania.revalidate();
 		  panel_pytania.repaint();
 		}
-	
-	public void getMessage(){
-		System.out.println("hello");
-	}
-	
+
 
 	
 	

@@ -2,10 +2,20 @@ package com.sample;
 
 rule "Test"
     when
-       	Odpowiedz(text=="Europa");
+       	Odpowiedz(text=="Europa"); // wszystkie elementy to odpowiedzi, aby je rozró¿niaæ sprawdzamy atr text
        	p:Pytanie();
     then
     	p.ask("Pytanie",new String[]{"Text","Text1"}); //tresc pytania, tresci odpowiedzi
         System.out.println("dzia³a");
 end
+
+rule "Test1"
+    when
+       	Odpowiedz(text=="Europa"); // wszystkie elementy to odpowiedzi, aby je rozró¿niaæ sprawdzamy atr text
+       	Odpowiedz(text=="Text");
+       	p:Pytanie();
+    then
+        System.out.println("dzia³a2");
+end
+
 

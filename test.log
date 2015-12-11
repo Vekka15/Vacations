@@ -2,29 +2,6 @@
 <org.drools.audit.event.ObjectLogEvent>
   <type>1</type>
   <factId>1</factId>
-  <objectToString>com.sample.Pytanie@4a12b38f</objectToString>
+  <objectToString>com.sample.Pytanie@29e4fb54</objectToString>
 </org.drools.audit.event.ObjectLogEvent>
-<org.drools.audit.event.ActivationLogEvent>
-  <type>4</type>
-  <activationId>Test [1, 2]</activationId>
-  <rule>Test</rule>
-  <declarations>p=com.sample.Pytanie@4a12b38f(1)</declarations>
-</org.drools.audit.event.ActivationLogEvent>
-<org.drools.audit.event.ObjectLogEvent>
-  <type>1</type>
-  <factId>2</factId>
-  <objectToString>com.sample.Odpowiedz@7a9590b7</objectToString>
-</org.drools.audit.event.ObjectLogEvent>
-<org.drools.audit.event.ActivationLogEvent>
-  <type>6</type>
-  <activationId>Test [1, 2]</activationId>
-  <rule>Test</rule>
-  <declarations>p=com.sample.Pytanie@4a12b38f(1)</declarations>
-</org.drools.audit.event.ActivationLogEvent>
-<org.drools.audit.event.ActivationLogEvent>
-  <type>7</type>
-  <activationId>Test [1, 2]</activationId>
-  <rule>Test</rule>
-  <declarations>p=com.sample.Pytanie@4a12b38f(1)</declarations>
-</org.drools.audit.event.ActivationLogEvent>
 </object-stream>
