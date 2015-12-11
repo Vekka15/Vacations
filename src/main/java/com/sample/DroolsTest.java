@@ -38,6 +38,7 @@ import javax.swing.BorderFactory;
  * This is a sample class to launch a rule.
  */
 public class DroolsTest {
+	public static StatefulKnowledgeSession ksession;
 
     public static final void main(String[] args) throws IOException {
     	
@@ -101,13 +102,12 @@ public class DroolsTest {
         try {
             // load up the knowledge base
             KnowledgeBase kbase = readKnowledgeBase();
-            StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
+            ksession = kbase.newStatefulKnowledgeSession();
             KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
             // go !
-            Message message = new Message();
-            message.setMessage("Hello World");
-            message.setStatus(Message.HELLO);
-            ksession.insert(message);
+            Odpowiedz odp = new Odpowiedz();
+            //ksession.insert(message);
+            odp.answer();
             ksession.fireAllRules();
             logger.close();
         } catch (Throwable t) {
