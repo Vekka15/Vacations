@@ -3,7 +3,7 @@ package com.sample
  
 rule "Test"
     when
-       	Odpowiedz(dym==10);
+       	Odpowiedz(text=="Europa");
     then
         System.out.println( "Dzia³a" );
 end

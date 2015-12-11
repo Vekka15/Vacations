@@ -41,10 +41,25 @@ import javax.swing.BorderFactory;
  */
 public class DroolsTest {
 	public static StatefulKnowledgeSession ksession;
-
+	public static KnowledgeRuntimeLogger logger;
     public static final void main(String[] args) throws IOException {
     	
-    	//PYTANIA
+    	
+    	//REGU£Y
+        try {
+            // load up the knowledge base
+            KnowledgeBase kbase = readKnowledgeBase();
+            ksession = kbase.newStatefulKnowledgeSession();
+            KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
+            // go !
+           // Odpowiedz odp = new Odpowiedz("Europa");
+            //ksession.insert(message);
+           // odp.answer();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        
+      //PYTANIA
     	final ButtonGroup radio_buttons = new ButtonGroup();
     	final Pytanie pytanie1 = new Pytanie("Wakacje gdzie bardziej ciê interesuj¹?");
     	Odpowiedz odp1 = new Odpowiedz("Polska");   	
@@ -104,8 +119,6 @@ public class DroolsTest {
     			  int wysokosc = 300;
     			  int szerokosc = 200;
     			  for(int i=0;i<pytanie1.odpowiedzi.size();i++){
-    				  System.out.println(pytanie1.odpowiedzi.get(i).text);
-					  System.out.println(i);
     				  radio_buttons.add(pytanie1.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
     				  pytanie1.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,50);
     				  pytanie1.odpowiedzi.get(i).znacznik.setVisible(true);
@@ -119,10 +132,11 @@ public class DroolsTest {
     				{
     					  public void actionPerformed(ActionEvent e)
     					  {
-    						  for(int i=0;i< pytanie1.odpowiedzi.size();i++){
-    							  
+    						  for(int i=0;i< pytanie1.odpowiedzi.size();i++){ 
     							  if (pytanie1.odpowiedzi.get(i).znacznik.isSelected()==true){
     								  System.out.println(pytanie1.odpowiedzi.get(i).text);
+    								  pytanie1.odpowiedzi.get(i).answer();
+    								  ksession.fireAllRules();
     							  }
     						  }
     					  }
@@ -143,22 +157,13 @@ public class DroolsTest {
     	panel.add(start);
     	panel.add(logoLabel);
     	panel.add(napis);
-    	
-    	//REGU£Y
-        try {
-            // load up the knowledge base
-            KnowledgeBase kbase = readKnowledgeBase();
-            ksession = kbase.newStatefulKnowledgeSession();
-            KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
-            // go !
-            Odpowiedz odp = new Odpowiedz("odp");
-            //ksession.insert(message);
-            odp.answer();
-            ksession.fireAllRules();
+    	//zamykanie regu³ cos takiego ??
+    	try {
             logger.close();
         } catch (Throwable t) {
             t.printStackTrace();
         }
+    	
     }
 
     private static KnowledgeBase readKnowledgeBase() throws Exception {
@@ -176,31 +181,5 @@ public class DroolsTest {
         return kbase;
     }
 
-    public static class Message {
-
-        public static final int HELLO = 0;
-        public static final int GOODBYE = 1;
-
-        private String message;
-
-        private int status;
-
-        public String getMessage() {
-            return this.message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public int getStatus() {
-            return this.status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-    }
 
 }
