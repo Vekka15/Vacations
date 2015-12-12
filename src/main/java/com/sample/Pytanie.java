@@ -3,6 +3,7 @@ package com.sample;
 
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,18 +22,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import com.sample.DroolsTest;
 
 public class Pytanie {
+
 	public String text; //PAMIETAC ZE MUSI BYC PUBLIC TO CO SPRAWDZAMY
 	int odpowiedz=0;
 	Integer answer_number;
 	public static ArrayList<Odpowiedz> odpowiedzi= new ArrayList<Odpowiedz>();;
 	JButton akceptuj_button = new JButton("Akceptuj");
 	ButtonGroup radio_buttons = new ButtonGroup();
-	public static JPanel panel_pytania;
-	Pytanie(String inf,JPanel panel){
-		this.text = inf;
-		this.panel_pytania=panel;
+	Pytanie(){
 		Font buttonFont = new Font("Tahoma", Font.BOLD, 15);
 		akceptuj_button.setBackground(null);
 		akceptuj_button.setBorder(BorderFactory.createLineBorder(Color.decode("#555555"),4));
@@ -40,28 +40,26 @@ public class Pytanie {
 		akceptuj_button.setForeground(Color.decode("#555555"));
 		akceptuj_button.setContentAreaFilled(false);
 		akceptuj_button.setVisible(true);
+		this.ask("Gdzie chcesz jechaæ?",new String[]{"Europa","Œwiat","Polska"});
 	}
 	
 	//przerysowanie wszystkich elementów na panelu wraz z wartoœciami nowego pytania
 	public void ask(String inf, String[] odp){
 			this.text=inf;
-
 			odpowiedzi.clear();
 			for(int j=0;j<odp.length;j++){
 				odpowiedzi.add(new Odpowiedz(odp[j]));
 			}
 			// ODSWIEZENIE PANELU
-		  panel_pytania.removeAll();
-		  panel_pytania.setVisible(true);
-		  panel_pytania.setLayout(null);
-		  panel_pytania.revalidate();
-		  panel_pytania.repaint();
+		  DroolsTest.panel.removeAll();
+		  DroolsTest.panel.revalidate();
+		  DroolsTest.panel.repaint();
 		  try {
 				final BufferedImage logo = ImageIO.read(new File("logo.png"));
   			  JLabel logoLabel = new JLabel(new ImageIcon(logo));
   		    	logoLabel.setBounds(0,0,logo.getWidth(),logo.getHeight());
   		    	logoLabel.setVisible(true);
-  		    	panel_pytania.add(logoLabel);
+  		    	DroolsTest.panel.add(logoLabel);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -74,7 +72,7 @@ public class Pytanie {
 		  pytanie_label.setForeground(Color.decode("#555555"));
 		  pytanie_label.setVisible(true);
 		  pytanie_label.setFont(font);
-		  panel_pytania.add(pytanie_label);
+		  DroolsTest.panel.add(pytanie_label);
 		  //RADIO BUTTONSY
 		  int wysokosc = 400;
 		  int szerokosc = 240;
@@ -82,7 +80,7 @@ public class Pytanie {
 			  radio_buttons.add(this.odpowiedzi.get(i).znacznik); //¿eby tylko jeden mogl byc zaznaczony
 			  this.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,25);
 			  this.odpowiedzi.get(i).znacznik.setVisible(true);
-			  panel_pytania.add(this.odpowiedzi.get(i).znacznik);
+			  DroolsTest.panel.add(this.odpowiedzi.get(i).znacznik);
 			  wysokosc = wysokosc+25;
 		  }
 		  this.odpowiedzi.get(0).znacznik.setSelected(true);
@@ -102,11 +100,10 @@ public class Pytanie {
 					  }
 				  }
 			});
-		  panel_pytania.add(this.akceptuj_button);
-		  panel_pytania.revalidate();
-		  panel_pytania.repaint();
+		  DroolsTest.panel.add(this.akceptuj_button);
+		  DroolsTest.panel.revalidate();
+		  DroolsTest.panel.repaint();
 		}
-
 
 	
 	

@@ -16,17 +16,23 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.drools.KnowledgeBase;
+import org.drools.KnowledgeBaseFactory;
+import org.drools.RuleBase;
+
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import org.drools.KnowledgeBase;
-import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderError;
 import org.drools.builder.KnowledgeBuilderErrors;
 import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
+import org.drools.compiler.DroolsError;
+import org.drools.compiler.DroolsParserException;
+import org.drools.compiler.PackageBuilder;
+import org.drools.compiler.PackageBuilderErrors;
 import org.drools.io.ResourceFactory;
 import org.drools.logger.KnowledgeRuntimeLogger;
 import org.drools.logger.KnowledgeRuntimeLoggerFactory;
@@ -34,36 +40,29 @@ import org.drools.runtime.StatefulKnowledgeSession;
 
 import javax.swing.BorderFactory;
 
+import jdk.management.resource.ResourceType;
 
 
-/**
- * This is a sample class to launch a rule.
- */
 public class DroolsTest {
 	
 
 	public static StatefulKnowledgeSession ksession;
 	public static KnowledgeRuntimeLogger logger;
-	public static KnowledgeBase kbase;
+	static KnowledgeBase kbase;
 	public static Pytanie pytanie ;
+	public static JPanel panel = new JPanel(); //panel powitalny
+	public static JFrame frame = new JFrame("Vacations");
+	
     public static final void main(String[] args) throws IOException {
-    	
-    	
-    	//REGU£Y
-        try {
-            // load up the knowledge base
-            kbase = readKnowledgeBase();
-            ksession = kbase.newStatefulKnowledgeSession();
-            logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+
+
+		
        	 	
     	
     	//INTERFACE
     	
     	final JFrame frame = new JFrame("Vacations"); //okno
-    	final JPanel panel = new JPanel(); //panel powitalny
+    	
     	//final JPanel panel_pytania = new JPanel(); //panel z pytaniami
     	
     	//napis
@@ -110,22 +109,28 @@ public class DroolsTest {
     	{
     		  public void actionPerformed(ActionEvent e)
     		  {
-    			  panel.removeAll();
-    			  panel.revalidate();
-    			  panel.repaint();
-    			//PYTANIE POCZ¥TKOWE
-  		    	pytanie = new Pytanie("Wakacje gdzie bardzie?",panel);
-  		    	ksession.insert(pytanie);
-  		    	pytanie.ask("Wakacje gdzie bardziej ciê interesuj¹?",new String[]{"Polska","Europa","Œwiat"});
+    				//REGUï¿½Y
+    		        try {
+    		        	KnowledgeBase kbase;
+    		            // load up the knowledge base
+    		        	 kbase = readKnowledgeBase();
+    		             ksession = kbase.newStatefulKnowledgeSession();
+    		            logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
+    		         //   ksession.fireAllRules();
+    		         //   logger.close();
+    		        } catch (Throwable t) {
+    		            t.printStackTrace();
+    		        }
+    		      
     		  }
     	});
     	
-    	//ZAMKNIECIE LOGERA NA WY£¥CZENIE PROGRAMU
-    	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-    	    public void run() {
-    	    	logger.close();
-    	    }
-    	}));
+    	//ZAMKNIECIE LOGERA NA WYï¿½ï¿½CZENIE PROGRAMU
+//    	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+//    	//    public void run() {
+//    	    	logger.close();
+//    	    }
+//    	}));
 
     	
     }
@@ -145,5 +150,13 @@ public class DroolsTest {
         return kbase;
     }
 
+    public static class Kartka {
+    	public static int dym;
+    	public static int temperatura;
+    	Kartka(int d, int t){
+    		dym=d;
+    		temperatura=t;
+    	}
+    }
 
 }

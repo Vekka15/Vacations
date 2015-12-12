@@ -1,21 +1,21 @@
 package com.sample;
 
-rule "Test"
+import com.sample.DroolsTest.Kartka;
+
+
+rule "Poczatek"
     when
-       	Odpowiedz(text=="Europa"); // wszystkie elementy to odpowiedzi, aby je rozró¿niaæ sprawdzamy atr text
-       	p:Pytanie();
+          
     then
-    	p.ask("Pytanie",new String[]{"Text","Text1"}); //tresc nowego pytania, tresci odpowiedzi
-        System.out.println("dzia³a");
+       insert(new Pytanie());
 end
 
-rule "Test1"
+rule "Pierwsze pytanie"
     when
-       	Odpowiedz(text=="Europa"); // wszystkie elementy to odpowiedzi, aby je rozró¿niaæ sprawdzamy atr text
-       	Odpowiedz(text=="Text");
-       	p:Pytanie();
+       Odpowiedz(text=="Europa");
+       p:Pytanie(); 
     then
-        System.out.println("dzia³a2");
+       p.ask("Co lubisz jesc?",new String[]{"Batony","Placki","Pï¿½czki"});
 end
 
 
