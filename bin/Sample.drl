@@ -1,21 +1,54 @@
-package com.sample;
+package com.sample
+ 
+import main.java.com.sample.DroolsTest.Pomiar;
+import main.java.com.sample.DroolsTest.Pozar;
+import main.java.com.sample.DroolsTest.Telefon;
+import main.java.com.sample.DroolsTest.Straz;
 
-import com.sample.DroolsTest.Kartka;
-
-
-rule "Poczatek"
+rule "Pomiar"
     when
           
     then
-       insert(new Pytanie());
+       insert(new Pomiar(0,151));
+       insert(new Pomiar(0,151));
 end
 
-rule "Pierwsze pytanie"
+rule "Dzialanie"
     when
-       Odpowiedz(text=="Europa");
-       p:Pytanie(); 
+        Telefon()        
     then
-       p.ask("Co lubisz jesc?",new String[]{"Batony","Placki","P�czki"});
+        System.out.println( "Prosz� zadzwoni� na numer 112.");       
+end
+ 
+rule "Reakcja"
+    when
+        Pomiar( dym == 1 || temperatura>150)        
+    then
+    	insert(new Pozar());      
 end
 
+rule "Informacja"
+    when
+         Pozar()        
+    then
+        System.out.println( "Pali si�!!!!!");       
+        insert(new Telefon());
+end
 
+rule "Straz przybyla"
+    when
+        Straz()
+        pozar: Pozar()        
+    then
+        System.out.println( "Straz przyby�a!");  
+        retract(pozar);     
+end
+
+rule "Odjazd"
+    when
+        straz: Straz()
+        not Pozar()        
+    then
+        System.out.println( "Straz odjechala!");  
+        retract(straz);    
+end

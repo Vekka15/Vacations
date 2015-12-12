@@ -1,14 +1,30 @@
 <object-stream>
 <org.drools.audit.event.ActivationLogEvent>
   <type>4</type>
-  <activationId>Pocz¹tek [0]</activationId>
-  <rule>Pocz¹tek</rule>
+  <activationId>Pomiar [1]</activationId>
+  <rule>Pomiar</rule>
   <declarations></declarations>
 </org.drools.audit.event.ActivationLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>1</factId>
+  <objectToString>main.java.com.sample.DroolsTest$Pomiar@2eea88a1</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
 <org.drools.audit.event.ActivationLogEvent>
   <type>6</type>
-  <activationId>Pocz¹tek [0]</activationId>
-  <rule>Pocz¹tek</rule>
+  <activationId>Pomiar [1]</activationId>
+  <rule>Pomiar</rule>
+  <declarations></declarations>
+</org.drools.audit.event.ActivationLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>2</factId>
+  <objectToString>main.java.com.sample.DroolsTest$Pozar@6f8e8894</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ActivationLogEvent>
+  <type>7</type>
+  <activationId>Pomiar [1]</activationId>
+  <rule>Pomiar</rule>
   <declarations></declarations>
 </org.drools.audit.event.ActivationLogEvent>
 </object-stream>

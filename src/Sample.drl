@@ -1,11 +1,13 @@
-package com.sample;
+package com.sample
 
-import main.java.com.sample.DroolsTest;
+
+import main.java.com.sample.Odpowiedz;
+import main.java.com.sample.Pytanie;
 
 
 rule "Poczatek"
     when
-          
+
     then
        insert(new Pytanie());
 end
@@ -13,9 +15,9 @@ end
 rule "Pierwsze pytanie"
     when
        Odpowiedz(text=="Europa");
-       p:Pytanie(); 
+       p:Pytanie();
     then
-       p.ask("Co lubisz jesc?",new String[]{"Batony","Placki","P�czki"});
+       p.ask("Co lubisz jesc?",new String[]{"Batony","Placki","Pďż˝czki"});
 end
 
 

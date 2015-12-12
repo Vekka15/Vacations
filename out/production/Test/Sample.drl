@@ -1,0 +1,23 @@
+package com.sample
+
+
+import main.java.com.sample.Odpowiedz;
+import main.java.com.sample.Pytanie;
+
+
+rule "Poczatek"
+    when
+
+    then
+       insert(new Pytanie());
+end
+
+rule "Pierwsze pytanie"
+    when
+       Odpowiedz(text=="Europa");
+       p:Pytanie();
+    then
+       p.ask("Co lubisz jesc?",new String[]{"Batony","Placki","Pďż˝czki"});
+end
+
+
