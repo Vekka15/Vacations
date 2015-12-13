@@ -3,6 +3,7 @@ package com.sample
 
 import main.java.com.sample.Odpowiedz;
 import main.java.com.sample.Pytanie;
+import main.java.com.sample.Miasto;
 
 
 rule "Poczatek"
@@ -10,6 +11,7 @@ rule "Poczatek"
 
     then
        insert(new Pytanie());
+       insert(new Miasto());
 end
 
 rule "Pierwsze pytanie"
@@ -17,7 +19,36 @@ rule "Pierwsze pytanie"
        Odpowiedz(text=="Europa");
        p:Pytanie();
     then
-       p.ask("Co lubisz jesc?",new String[]{"Batony","Placki","Pďż˝czki"});
+       p.ask("Co lubisz jesc?",new String[]{"Batony","Placki","Pďż˝czki"},0);
+end
+
+rule "Drugie pytanie"
+    when
+       Odpowiedz(text=="Europa");
+       Odpowiedz(text=="Placki");
+       p:Pytanie();
+    then
+       p.ask("Wspinaczki czy spacerki?",new String[]{"Góry","Plaże","Paczki"},1);
+end
+
+rule "Trzecie pytanie"
+    when
+       Odpowiedz(text=="Polska");
+       Odpowiedz(text=="Batony");
+       p:Pytanie();
+    then
+       p.ask("Batony?",new String[]{"Góry","Plaże","Paczki"},0);
+end
+
+rule "Czwarte pytanie"
+    when
+       Odpowiedz(text=="Europa");
+       Odpowiedz(text=="Placki");
+       Odpowiedz(text=="Góry");
+       Odpowiedz(text=="Plaże");
+       p:Pytanie();
+    then
+       p.ask("Batony?",new String[]{"Góry","Plaże","Paczki"},0);
 end
 
 

@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 
 
 public class Pytanie {
-
+    public static int typ;
     public String text;
     public static ArrayList<Odpowiedz> odpowiedzi= new ArrayList<Odpowiedz>();;
     JButton akceptuj_button = new JButton("Akceptuj");
@@ -34,15 +34,16 @@ public class Pytanie {
         akceptuj_button.setContentAreaFilled(false);
         akceptuj_button.setVisible(true);
         //TO JEST TAK JAKBY NASZE PIERWSZE PYTANIE
-        this.ask("Gdzie chcesz jechać?",new String[]{"Europa","Świat","Polska"});
+        this.ask("Gdzie chcesz jechać?",new String[]{"Europa","Świat","Polska"},0);
     }
 
     //przerysowanie wszystkich elementów na panelu wraz z wartościami nowego pytania
-    public void ask(String inf, String[] odp){
+    public void ask(String inf, String[] odp,int typ_odpowiedzi){
+        this.typ=typ_odpowiedzi;
         this.text=inf;
         odpowiedzi.clear();
         for(int j=0;j<odp.length;j++){
-            odpowiedzi.add(new Odpowiedz(odp[j]));
+            odpowiedzi.add(new Odpowiedz((odp[j]),typ_odpowiedzi));
         }
         // ODSWIEZENIE PANELU
         DroolsTest.panel.removeAll();
@@ -67,17 +68,34 @@ public class Pytanie {
         pytanie_label.setVisible(true);
         pytanie_label.setFont(font);
         DroolsTest.panel.add(pytanie_label);
-        //RADIO BUTTONSY
-        int wysokosc = 400;
-        int szerokosc = 240;
-        for(int i=0;i<this.odpowiedzi.size();i++){
-            radio_buttons.add(this.odpowiedzi.get(i).znacznik); //żeby tylko jeden mogl byc zaznaczony
-            this.odpowiedzi.get(i).znacznik.setBounds(szerokosc,wysokosc,150,25);
-            this.odpowiedzi.get(i).znacznik.setVisible(true);
-            DroolsTest.panel.add(this.odpowiedzi.get(i).znacznik);
-            wysokosc = wysokosc+25;
+        //RADIO BUTTONS
+        System.out.println(typ_odpowiedzi);
+        if(typ_odpowiedzi==0) {
+            int wysokosc = 400;
+            int szerokosc = 240;
+            for (int i = 0; i < this.odpowiedzi.size(); i++) {
+                radio_buttons.add(this.odpowiedzi.get(i).znacznik); //żeby tylko jeden mogl byc zaznaczony
+                this.odpowiedzi.get(i).znacznik.setBounds(szerokosc, wysokosc, 150, 25);
+                this.odpowiedzi.get(i).znacznik.setVisible(true);
+                DroolsTest.panel.add(this.odpowiedzi.get(i).znacznik);
+                wysokosc = wysokosc + 25;
+            }
+            this.odpowiedzi.get(0).znacznik.setSelected(true);
+            //CHECKBOXY
+        }else{
+            System.out.println("Tworzy");
+            int wysokosc = 400;
+            int szerokosc = 240;
+            for (int i = 0; i < this.odpowiedzi.size(); i++) {
+                this.odpowiedzi.get(i).check_znacznik.setBounds(szerokosc, wysokosc, 150, 25);
+                this.odpowiedzi.get(i).check_znacznik.setVisible(true);
+                DroolsTest.panel.add(this.odpowiedzi.get(i).check_znacznik);
+                wysokosc = wysokosc + 25;
+            }
         }
-        this.odpowiedzi.get(0).znacznik.setSelected(true);
+
+
+
         this.akceptuj_button.setBounds(200,500,150,50);
         this.akceptuj_button.setVisible(true);
         this.akceptuj_button.addActionListener(new ActionListener()
@@ -87,13 +105,28 @@ public class Pytanie {
                 // jedziemy po wszystkich możliwych radiobuttonsach i te które są zaznaczone
                 //w przypadku checkboxow mozna zrobic inna grube przyciskow dla pytania i przy .ask zaznaczac 1 w przypadku radio 0 dla check
                 ArrayList<Odpowiedz> odpowiedzi= Pytanie.this.odpowiedzi;
-                for(int i=0;i< odpowiedzi.size();i++){
-                    if (odpowiedzi.get(i).znacznik.isSelected()==true){
-                        System.out.println(odpowiedzi.get(i).text);
-                        odpowiedzi.get(i).answer();
-                        DroolsTest.ksession.fireAllRules();
+                int typ_odpowiedzi=Pytanie.this.typ;
+                System.out.println(typ_odpowiedzi);
+                if(typ_odpowiedzi==0) {
+                    for (int i = 0; i < odpowiedzi.size(); i++) {
+                        if (odpowiedzi.get(i).znacznik.isSelected() == true) {
+                            System.out.println(odpowiedzi.get(i).text);
+                            odpowiedzi.get(i).answer();
+                            DroolsTest.ksession.fireAllRules();
+                            break;
+                        }
                     }
                 }
+                    if (typ_odpowiedzi == 1) {
+                        for (int i = 0; i < odpowiedzi.size(); i++) {
+                            if (odpowiedzi.get(i).check_znacznik.isSelected() == true) {
+                                System.out.println(odpowiedzi.get(i).text);
+                                odpowiedzi.get(i).answer();
+                            }
+                        }
+                        DroolsTest.ksession.fireAllRules();
+                    }
+
             }
         });
         DroolsTest.panel.add(this.akceptuj_button);

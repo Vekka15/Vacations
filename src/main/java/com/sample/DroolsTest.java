@@ -128,29 +128,6 @@ public class DroolsTest {
     }
 
 
-//
-//    public static class Pomiar {
-//    	public static int dym;
-//    	public static int temperatura;
-//    	Pomiar(int d, int t){
-//    		dym=d;
-//    		temperatura=t;
-//    	}
-//    }
-//
-//    public static class Pozar {
-//       public Pozar(){
-//
-//        }
-//    }
-//
-//    public static class Telefon{
-//    	public static final int numer=112;
-//    }
-//
-//    public static class Straz{
-//
-//    }
 
 
 
